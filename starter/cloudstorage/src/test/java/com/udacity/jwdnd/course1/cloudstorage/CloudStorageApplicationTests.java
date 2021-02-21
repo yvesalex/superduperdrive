@@ -147,7 +147,7 @@ class CloudStorageApplicationTests {
 		Thread.sleep(3000);
 		homePage.verifyNoteExists(note, driver);
 
-		//delete and verify
+		//edit and verify
 		Thread.sleep(2000);
 		homePage = new HomePage(driver);
 		Thread.sleep(3000);
@@ -247,7 +247,7 @@ class CloudStorageApplicationTests {
 		Thread.sleep(3000);
 		homePage.verifyCredentialExists(credential, driver);
 
-		//delete and verify
+		//edit and verify
 		Thread.sleep(2000);
 		homePage = new HomePage(driver);
 		Thread.sleep(3000);

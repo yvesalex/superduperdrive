@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
@@ -78,22 +79,23 @@ public class FileController {
     }
 
     @PostMapping
-    public String create(@RequestParam(name = "fileUpload") MultipartFile file, Model model) {
+    public String create(@RequestParam(name = "fileUpload") MultipartFile file, Model model,
+                         RedirectAttributes redirectAttributes) {
         try {
             User user = (User) model.getAttribute("user");
             File newFile = new File(
                     fileService.count(), file.getOriginalFilename(),
                     file.getContentType(), file.getSize(), user.getUserId(),
                     file.getBytes());
-            System.out.println("new file: " + newFile.getFilename());
-
+            if(fileService.findByName(newFile.getFilename()) != null) throw new Exception("Filename already in use...");
             if(fileService.create(newFile) <= 0) throw new Exception("File has not been created...");
             return "redirect:/home?success=true";
         }
         catch(Exception e){
             System.out.println(e.getMessage());
             model.addAttribute("error", e.getMessage());
-            return "home";
+            redirectAttributes.addFlashAttribute("errorFileUpload",e.getMessage());
+            return "redirect:/home";
         }
     }
 }

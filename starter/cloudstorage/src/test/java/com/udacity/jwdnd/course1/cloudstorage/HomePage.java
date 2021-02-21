@@ -73,9 +73,8 @@ public class HomePage {
         btnNavNotesTab.click();
         Thread.sleep(1000);
         boolean found = false;
-        for (WebElement th: driver.findElements(By.tagName("td"))) {
-            if(th.getText().equals(note.getNoteTitle()))
-                found = !found;
+        if(driver.findElement(By.id("btn-edit-" + note.getNoteId())) != null){
+            found = true;
         }
         Assertions.assertTrue(found);
     }
@@ -84,9 +83,8 @@ public class HomePage {
         btnNavNotesTab.click();
         Thread.sleep(1000);
         boolean found = false;
-        for (WebElement th: driver.findElements(By.tagName("td"))) {
-            if(th.getText().equals(note.getNoteTitle()))
-                found = !found;
+        if(driver.findElement(By.id("btn-edit-" + note.getNoteId())) != null){
+            found = true;
         }
         Assertions.assertFalse(found);
     }
@@ -126,9 +124,8 @@ public class HomePage {
         btnNavCredentialsTab.click();
         Thread.sleep(1000);
         boolean found = false;
-        for (WebElement th: driver.findElements(By.tagName("td"))) {
-            if(th.getText().equals(credential.getUrl()))
-                found = !found;
+        if(driver.findElement(By.id("btn-edit-credential-" + credential.getCredentialId())) != null){
+            found = true;
         }
         Assertions.assertTrue(found);
     }
@@ -137,9 +134,8 @@ public class HomePage {
         btnNavCredentialsTab.click();
         Thread.sleep(1000);
         boolean found = false;
-        for (WebElement th: driver.findElements(By.tagName("td"))) {
-            if(th.getText().equals(credential.getUrl()))
-                found = !found;
+        if(driver.findElement(By.id("btn-edit-credential-" + credential.getCredentialId())) != null){
+            found = true;
         }
         Assertions.assertFalse(found);
     }

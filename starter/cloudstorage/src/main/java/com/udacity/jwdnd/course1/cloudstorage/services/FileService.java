@@ -39,4 +39,8 @@ public class FileService {
     }
 
     public void delete(Integer id) { fileMapper.delete(id); }
+
+    public File findByName(String filename) {
+        return fileMapper.findByFilename(filename);
+    }
 }

@@ -28,5 +28,8 @@ public interface FileMapper {
 
     @Select("select count(*) from files")
     Integer count();
+
+    @Select("select * from files where filename = #{filename}")
+    File findByFilename(String filename);
 }
 

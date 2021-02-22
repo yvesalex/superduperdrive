@@ -101,11 +101,11 @@
                                 <tbody>
                                     <tr th:each="note: ${notes}">
                                         <td>
-                                            <button th:id="${'btn-edit-' + note.noteId}" onclick="showNoteModal(this.getAttribute('data-id'),this.getAttribute('data-title'),this.getAttribute('data-description'))"
+                                            <button th:id="${'btn-edit-note-' + note.noteId}" onclick="showNoteModal(this.getAttribute('data-id'),this.getAttribute('data-title'),this.getAttribute('data-description'))"
                                                     th:data-id="${note.noteId}" th:data-title="${note.noteTitle}"
                                                     th:data-description="${note.noteDescription}"
                                                     type="button" class="btn btn-success">Edit</button>
-                                            <a class="btn btn-danger" th:href="@{/notes/delete/{id}(id=${note.noteId})}"
+                                            <a th:id="${'btn-delete-note-' + note.noteId}" class="btn btn-danger" th:href="@{/notes/delete/{id}(id=${note.noteId})}"
                                                th:data-title="${note.noteTitle}">Delete</a>
                                         </td>
                                         <td scope="row" th:text="${note.noteTitle}">Example Note Title</td>
@@ -168,7 +168,7 @@
                                                 th:data-id="${c.credentialId}" th:data-url="${c.url}"
                                                 th:data-username="${c.username}" th:data-password="${c.decryptedPassword}"
                                                 type="button" class="btn btn-success">Edit</button>
-                                        <a class="btn btn-danger" th:href="@{/credentials/delete/{id}(id=${c.credentialId})}"
+                                        <a th:id="${'btn-delete-credential-' + c.credentialId}" class="btn btn-danger" th:href="@{/credentials/delete/{id}(id=${c.credentialId})}"
                                            th:data-url="${c.url}">Delete</a>
                                     </td>
                                     <td scope="row" th:text="${c.url}">Example Credential URL</td>

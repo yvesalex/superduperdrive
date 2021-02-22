@@ -14,6 +14,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class CloudStorageApplicationTests {
 
 	@LocalServerPort
@@ -51,6 +52,7 @@ class CloudStorageApplicationTests {
 	 * @throws InterruptedException
 	 */
 	@Test
+	@Order(1)
 	public void unauthorizedTest() throws InterruptedException {
 		//test access to login
 		driver.get(this.baseURL + "/login");
@@ -71,6 +73,7 @@ class CloudStorageApplicationTests {
 	 * @throws InterruptedException
 	 */
 	@Test
+	@Order(2)
 	public void singupLoginLogoutUnauthorizedTest() throws InterruptedException {
 		driver.get(this.baseURL + "/signup");
 		Thread.sleep(3000);
@@ -99,26 +102,21 @@ class CloudStorageApplicationTests {
 	 * @throws InterruptedException
 	 */
 	@Test
+	@Order(3)
 	public void createNoteTest() throws InterruptedException {
-		driver.get(this.baseURL + "/signup");
-		Thread.sleep(3000);
-		//signup
-		SignupPage signupPage = new SignupPage(driver);
-		signupPage.signup(this.user);
-		Thread.sleep(1000);
+		driver.get(this.baseURL + "/login");
 
 		//login
 		LoginPage loginPage = new LoginPage(driver);
 		loginPage.login(this.user);
+		Thread.sleep(2000);
 
 		//create and verify
-		Thread.sleep(2000);
 		HomePage homePage = new HomePage(driver);
-		Thread.sleep(3000);
+		Thread.sleep(2000);
 		homePage.createNote(note);
-		Thread.sleep(3000);
+		Thread.sleep(2000);
 		homePage.verifyNoteExists(note, driver);
-
 		Thread.sleep(2000);
 	}
 
@@ -127,32 +125,24 @@ class CloudStorageApplicationTests {
 	 * @throws InterruptedException
 	 */
 	@Test
+	@Order(4)
 	public void editNoteTest() throws InterruptedException {
-		driver.get(this.baseURL + "/signup");
-		Thread.sleep(3000);
-		//signup
-		SignupPage signupPage = new SignupPage(driver);
-		signupPage.signup(this.user);
-		Thread.sleep(1000);
+		driver.get(this.baseURL + "/login");
 
 		//login
 		LoginPage loginPage = new LoginPage(driver);
 		loginPage.login(this.user);
+		Thread.sleep(2000);
 
 		//create and verify
-		Thread.sleep(2000);
 		HomePage homePage = new HomePage(driver);
-		Thread.sleep(3000);
-		homePage.createNote(note);
-		Thread.sleep(3000);
+		Thread.sleep(2000);
 		homePage.verifyNoteExists(note, driver);
+		Thread.sleep(2000);
 
 		//edit and verify
-		Thread.sleep(2000);
-		homePage = new HomePage(driver);
-		Thread.sleep(3000);
 		homePage.editNote(note, driver);
-		Thread.sleep(3000);
+		Thread.sleep(2000);
 		note.setNoteTitle(note.getNoteTitle() + " edited");
 		note.setNoteDescription(note.getNoteDescription() + " updated");
 		homePage.verifyNoteExists(note, driver);
@@ -164,30 +154,22 @@ class CloudStorageApplicationTests {
 	 * @throws InterruptedException
 	 */
 	@Test
+	@Order(5)
 	public void deleteNoteTest() throws InterruptedException {
-		driver.get(this.baseURL + "/signup");
-		Thread.sleep(3000);
-		//signup
-		SignupPage signupPage = new SignupPage(driver);
-		signupPage.signup(this.user);
-		Thread.sleep(1000);
+		driver.get(this.baseURL + "/login");
 
 		//login
 		LoginPage loginPage = new LoginPage(driver);
 		loginPage.login(this.user);
-
-		//create and verify
 		Thread.sleep(2000);
+
+		//verify
 		HomePage homePage = new HomePage(driver);
-		Thread.sleep(3000);
-		homePage.createNote(note);
-		Thread.sleep(3000);
+		Thread.sleep(2000);
 		homePage.verifyNoteExists(note, driver);
+		Thread.sleep(2000);
 
 		//delete and verify
-		Thread.sleep(2000);
-		homePage = new HomePage(driver);
-		Thread.sleep(3000);
 		homePage.deleteNote(note, driver);
 		Thread.sleep(3000);
 		homePage.verifyNoteDeleted(note, driver);
@@ -199,26 +181,21 @@ class CloudStorageApplicationTests {
 	 * @throws InterruptedException
 	 */
 	@Test
+	@Order(6)
 	public void createCredentialTest() throws InterruptedException {
-		driver.get(this.baseURL + "/signup");
-		Thread.sleep(3000);
-		//signup
-		SignupPage signupPage = new SignupPage(driver);
-		signupPage.signup(this.user);
-		Thread.sleep(1000);
+		driver.get(this.baseURL + "/login");
 
 		//login
 		LoginPage loginPage = new LoginPage(driver);
 		loginPage.login(this.user);
+		Thread.sleep(2000);
 
 		//create and verify
-		Thread.sleep(2000);
 		HomePage homePage = new HomePage(driver);
-		Thread.sleep(3000);
+		Thread.sleep(2000);
 		homePage.createCredential(credential);
-		Thread.sleep(3000);
+		Thread.sleep(2000);
 		homePage.verifyCredentialExists(credential, driver);
-
 		Thread.sleep(2000);
 	}
 
@@ -227,32 +204,26 @@ class CloudStorageApplicationTests {
 	 * @throws InterruptedException
 	 */
 	@Test
+	@Order(7)
 	public void editCredentialTest() throws InterruptedException {
-		driver.get(this.baseURL + "/signup");
-		Thread.sleep(3000);
-		//signup
-		SignupPage signupPage = new SignupPage(driver);
-		signupPage.signup(this.user);
-		Thread.sleep(1000);
+		driver.get(this.baseURL + "/login");
 
 		//login
 		LoginPage loginPage = new LoginPage(driver);
 		loginPage.login(this.user);
-
-		//create and verify
 		Thread.sleep(2000);
+
+		//verify
 		HomePage homePage = new HomePage(driver);
-		Thread.sleep(3000);
-		homePage.createCredential(credential);
-		Thread.sleep(3000);
+		Thread.sleep(2000);
 		homePage.verifyCredentialExists(credential, driver);
 
 		//edit and verify
 		Thread.sleep(2000);
 		homePage = new HomePage(driver);
-		Thread.sleep(3000);
+		Thread.sleep(2000);
 		homePage.editCredential(credential, driver);
-		Thread.sleep(3000);
+		Thread.sleep(2000);
 		credential.setUrl(credential.getUrl() + "z");
 		homePage.verifyCredentialExists(credential, driver);
 		Thread.sleep(2000);
@@ -263,32 +234,26 @@ class CloudStorageApplicationTests {
 	 * @throws InterruptedException
 	 */
 	@Test
+	@Order(8)
 	public void deleteCredentialTest() throws InterruptedException {
-		driver.get(this.baseURL + "/signup");
-		Thread.sleep(3000);
-		//signup
-		SignupPage signupPage = new SignupPage(driver);
-		signupPage.signup(this.user);
-		Thread.sleep(1000);
+		driver.get(this.baseURL + "/login");
 
 		//login
 		LoginPage loginPage = new LoginPage(driver);
 		loginPage.login(this.user);
-
-		//create and verify
 		Thread.sleep(2000);
+
+		//verify
 		HomePage homePage = new HomePage(driver);
-		Thread.sleep(3000);
-		homePage.createCredential(credential);
-		Thread.sleep(3000);
+		Thread.sleep(2000);
 		homePage.verifyCredentialExists(credential, driver);
 
 		//delete and verify
 		Thread.sleep(2000);
 		homePage = new HomePage(driver);
-		Thread.sleep(3000);
+		Thread.sleep(2000);
 		homePage.deleteCredential(credential, driver);
-		Thread.sleep(3000);
+		Thread.sleep(2000);
 		homePage.verifyCredentialDeleted(credential, driver);
 		Thread.sleep(2000);
 	}

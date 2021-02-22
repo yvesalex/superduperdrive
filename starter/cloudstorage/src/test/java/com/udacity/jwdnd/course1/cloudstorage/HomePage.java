@@ -5,6 +5,7 @@ import com.udacity.jwdnd.course1.cloudstorage.model.Note;
 import com.udacity.jwdnd.course1.cloudstorage.model.User;
 import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -73,7 +74,7 @@ public class HomePage {
         btnNavNotesTab.click();
         Thread.sleep(1000);
         boolean found = false;
-        if(driver.findElement(By.id("btn-edit-" + note.getNoteId())) != null){
+        if(driver.findElement(By.id("btn-edit-note-" + note.getNoteId())) != null){
             found = true;
         }
         Assertions.assertTrue(found);
@@ -83,14 +84,19 @@ public class HomePage {
         btnNavNotesTab.click();
         Thread.sleep(1000);
         boolean found = false;
-        if(driver.findElement(By.id("btn-edit-" + note.getNoteId())) != null){
-            found = true;
+        try{
+            if(driver.findElement(By.id("btn-edit-note-" + note.getNoteId())) != null){
+                found = true;
+            }
+        }
+        catch (NoSuchElementException e){
+            //
         }
         Assertions.assertFalse(found);
     }
 
     public void editNote(Note note, WebDriver driver) throws InterruptedException {
-        WebElement btnEdit = driver.findElement(By.id("btn-edit-" + note.getNoteId()));
+        WebElement btnEdit = driver.findElement(By.id("btn-edit-note-" + note.getNoteId()));
         btnEdit.click();
         Thread.sleep(1000);
         noteTitle.sendKeys(" edited");
@@ -101,7 +107,7 @@ public class HomePage {
     }
 
     public void deleteNote(Note note, WebDriver driver) {
-        WebElement btnDelete = driver.findElement(By.linkText("Delete"));
+        WebElement btnDelete = driver.findElement(By.id("btn-delete-note-" + note.getNoteId()));
         btnDelete.click();
     }
 
@@ -134,8 +140,13 @@ public class HomePage {
         btnNavCredentialsTab.click();
         Thread.sleep(1000);
         boolean found = false;
-        if(driver.findElement(By.id("btn-edit-credential-" + credential.getCredentialId())) != null){
-            found = true;
+        try{
+            if(driver.findElement(By.id("btn-edit-credential-" + credential.getCredentialId())) != null){
+                found = true;
+            }
+        }
+        catch (NoSuchElementException e){
+            //
         }
         Assertions.assertFalse(found);
     }
@@ -150,7 +161,7 @@ public class HomePage {
     }
 
     public void deleteCredential(Credential credential, WebDriver driver) {
-        WebElement btnDelete = driver.findElement(By.linkText("Delete"));
+        WebElement btnDelete = driver.findElement(By.id("btn-delete-credential-" + credential.getCredentialId()));
         btnDelete.click();
     }
 }
